@@ -1,42 +1,64 @@
 # client-arqweb
 
-This template should help get you started developing with Vue 3 in Vite.
+Cliente web con Vue 3 y Vite para la gestión de tareas con roles. **Este repositorio solo consume la API** del servidor (otro repositorio); no implementa endpoints ni lógica de servidor.
 
-## Recommended IDE Setup
+## Estructura del proyecto
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```text
+src/
+  app/router/          # rutas y protección (sesión y roles)
+  layouts/             # diseños de autenticación y aplicación
+  shared/api/          # cliente HTTP hacia /api
+  shared/auth/         # permisos de interfaz por rol
+  features/
+    auth/              # inicio de sesión, api.ts + api.mock.ts
+    tasks/             # tareas
+    members/           # miembros del equipo
 ```
 
-### Compile and Hot-Reload for Development
+Cada módulo (`feature`) expone funciones en `api.ts` que llaman al servidor. Con `VITE_USE_MOCK_API=true` se usan datos simulados en `api.mock.ts` para desarrollar sin el otro repositorio.
+
+## Puesta en marcha
 
 ```sh
+npm install --legacy-peer-deps
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Abre la URL que muestra Vite (por defecto `http://127.0.0.1:5173/`).
+
+### Modo demostración (datos simulados)
+
+En `.env.development`:
+
+- `VITE_USE_MOCK_API=true`
+
+Usuarios de prueba:
+
+| Correo | Contraseña | Rol |
+| --- | --- | --- |
+| admin@demo.com | demo123 | Administrador |
+| member@demo.com | demo123 | Miembro |
+
+El rol **miembro** no ve la sección de miembros ni puede eliminar tareas.
+
+## Conectar la API real
+
+1. En `.env.development` (o `.env.production`): `VITE_USE_MOCK_API=false`
+2. Ajustar `VITE_API_BASE_URL` (por defecto `/api`, mismo origen en el servidor compartido)
+3. En desarrollo, Vite reenvía `/api` hacia `VITE_API_PROXY_TARGET` (ver `vite.config.ts`)
+4. Adaptar rutas y tipos en `features/*/api.ts` al contrato del servidor
+
+El cliente envía la cabecera `Authorization: Bearer <token>` cuando hay sesión activa (ver `shared/api/client.ts`).
+
+## Scripts disponibles
 
 ```sh
-npm run build
+npm run dev      # servidor de desarrollo
+npm run build    # compilación para producción
+npm run preview  # vista previa del build
 ```
+
+## Requisitos
+
+Node.js según `package.json` (recomendado ^22.18 o >=24.12). En entornos con Node 20 puede ser necesario `npm install --legacy-peer-deps`.
