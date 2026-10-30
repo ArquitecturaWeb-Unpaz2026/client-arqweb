@@ -1,32 +1,41 @@
 import type { Task, TaskInput } from './types'
 
+const names: Record<string, string> = {
+  'u-admin': 'Administrador',
+  'u-member': 'Miembro',
+  'u-3': 'Ana García',
+}
+
 let tasks: Task[] = [
   {
     id: 't-1',
     title: 'Definir contrato de API',
     description: 'Documentar endpoints existentes y tipos de respuesta.',
-    status: 'done',
+    status: 'resuelta',
     assigneeId: 'u-admin',
+    assigneeName: 'Administrador',
     creatorId: 'u-admin',
-    dueDate: '2026-10-20',
+    dueDate: '2026-10-20T16:00:00.000Z',
     createdAt: '2026-10-10T10:00:00.000Z',
   },
   {
     id: 't-2',
     title: 'Listado de tareas',
     description: 'Vista con filtros básicos y estados.',
-    status: 'in_progress',
+    status: 'en_proceso',
     assigneeId: 'u-member',
+    assigneeName: 'Miembro',
     creatorId: 'u-admin',
-    dueDate: '2026-10-28',
+    dueDate: '2026-10-28T18:00:00.000Z',
     createdAt: '2026-10-15T12:00:00.000Z',
   },
   {
     id: 't-3',
     title: 'Gestión de miembros',
     description: 'Solo visible para administradores.',
-    status: 'todo',
+    status: 'pendiente',
     assigneeId: null,
+    assigneeName: null,
     creatorId: 'u-admin',
     dueDate: null,
     createdAt: '2026-10-18T09:30:00.000Z',
@@ -35,6 +44,11 @@ let tasks: Task[] = [
 
 function delay(ms = 300): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+function nameFor(assigneeId: string | null | undefined): string | null {
+  if (!assigneeId) return null
+  return names[assigneeId] ?? `Usuario ${assigneeId}`
 }
 
 export async function mockListTasks(): Promise<Task[]> {
@@ -57,8 +71,9 @@ export async function mockCreateTask(input: TaskInput, creatorId?: string | null
     id: `t-${Date.now()}`,
     title: input.title,
     description: input.description ?? '',
-    status: input.status ?? 'todo',
+    status: input.status ?? 'pendiente',
     assigneeId: input.assigneeId ?? null,
+    assigneeName: nameFor(input.assigneeId),
     creatorId: creatorId ?? input.assigneeId ?? null,
     dueDate: input.dueDate ?? null,
     createdAt: new Date().toISOString(),
@@ -74,10 +89,13 @@ export async function mockUpdateTask(id: string, input: TaskInput): Promise<Task
     throw new Error('Tarea no encontrada')
   }
   const current = tasks[index]!
+  const assigneeId = input.assigneeId === undefined ? current.assigneeId : input.assigneeId
   const updated: Task = {
     ...current,
     ...input,
     title: input.title ?? current.title,
+    assigneeId,
+    assigneeName: input.assigneeId === undefined ? current.assigneeName : nameFor(assigneeId),
   }
   tasks[index] = updated
   return { ...updated }

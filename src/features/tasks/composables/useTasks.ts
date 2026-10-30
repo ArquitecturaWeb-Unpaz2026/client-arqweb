@@ -25,6 +25,12 @@ export function useTasks() {
     return created
   }
 
+  async function update(id: string, input: TaskInput) {
+    const updated = await tasksApi.updateTask(id, input)
+    tasks.value = tasks.value.map((task) => (task.id === updated.id ? updated : task))
+    return updated
+  }
+
   async function remove(id: string) {
     await tasksApi.deleteTask(id)
     tasks.value = tasks.value.filter((task) => task.id !== id)
@@ -32,5 +38,5 @@ export function useTasks() {
 
   onMounted(load)
 
-  return { tasks, loading, error, load, create, remove }
+  return { tasks, loading, error, load, create, update, remove }
 }

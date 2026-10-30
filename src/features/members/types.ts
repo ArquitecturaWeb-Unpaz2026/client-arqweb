@@ -6,3 +6,10 @@ export type Member = {
   name: string
   role: Role
 }
+
+export type MemberInput = {
+  name: string
+  email: string
+  role: Role
+  password?: string
+}

@@ -1,4 +1,4 @@
-export type TaskStatus = 'todo' | 'in_progress' | 'done'
+export type TaskStatus = 'pendiente' | 'asignada' | 'en_proceso' | 'resuelta' | 'cancelada'
 
 export type Task = {
   id: string
@@ -6,6 +6,7 @@ export type Task = {
   description: string
   status: TaskStatus
   assigneeId: string | null
+  assigneeName: string | null
   creatorId: string | null
   dueDate: string | null
   createdAt: string

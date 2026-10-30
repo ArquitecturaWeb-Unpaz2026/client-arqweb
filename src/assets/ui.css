@@ -131,22 +131,43 @@
   white-space: nowrap;
 }
 
-.ui-badge--todo {
+.ui-badge--todo,
+.ui-badge--pendiente {
   background: #f1f5f9;
   color: #475569;
   border-color: #cbd5e1;
 }
 
-.ui-badge--in_progress {
+.ui-badge--asignada {
+  background: #e0f2fe;
+  color: #075985;
+  border-color: #7dd3fc;
+}
+
+.ui-badge--in_progress,
+.ui-badge--en_proceso {
   background: #ecfdf5;
   color: #0f766e;
   border-color: #99f6e4;
 }
 
-.ui-badge--done {
+.ui-badge--done,
+.ui-badge--resuelta {
   background: #ccfbf1;
   color: #115e59;
   border-color: #5eead4;
+}
+
+.ui-badge--cancelada {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #94a3b8;
+}
+
+.ui-badge--overdue {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
 }
 
 .ui-link {

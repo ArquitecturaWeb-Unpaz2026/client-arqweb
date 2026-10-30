@@ -1,6 +1,7 @@
 import type { Role } from '@/features/auth/types'
 import { cleanDisplayName, mapApiRole } from '@/shared/auth/mapRole'
-import type { Task, TaskStatus } from './types'
+import { statusFromEstadoNombre } from '@/shared/tasks/statusLabels'
+import type { Task } from './types'
 
 export type ApiEstado = {
   id: number
@@ -31,31 +32,6 @@ export type ApiTarea = {
   fechaVencimiento?: string | null
 }
 
-function mapEstadoNombre(nombre?: string | null): TaskStatus {
-  const normalized = (nombre ?? '').trim().toLowerCase()
-  if (
-    ['done', 'completada', 'completa', 'finalizada', 'resuelta', 'cerrada'].includes(
-      normalized,
-    )
-  ) {
-    return 'done'
-  }
-  if (
-    [
-      'in_progress',
-      'en progreso',
-      'en_progreso',
-      'en curso',
-      'en_curso',
-      'progreso',
-      'trabajando',
-    ].includes(normalized)
-  ) {
-    return 'in_progress'
-  }
-  return 'todo'
-}
-
 function roleFromUsuario(usuario: ApiUsuario): Role {
   if (typeof usuario.rol === 'string') {
     return mapApiRole(usuario.rol)
@@ -68,12 +44,19 @@ export function mapTarea(tarea: ApiTarea): Task {
     id: String(tarea.id),
     title: tarea.titulo,
     description: tarea.descripcion ?? '',
-    status: mapEstadoNombre(tarea.estado?.nombre),
+    status: statusFromEstadoNombre(tarea.estado?.nombre),
     assigneeId: tarea.usuario?.id != null ? String(tarea.usuario.id) : null,
+    assigneeName: assigneeNameFrom(tarea.usuario),
     creatorId: tarea.creador?.id != null ? String(tarea.creador.id) : null,
     dueDate: tarea.fechaVencimiento ?? null,
     createdAt: tarea.fechaCreacion ?? new Date().toISOString(),
   }
+}
+
+function assigneeNameFrom(usuario: ApiUsuario | null | undefined): string | null {
+  if (!usuario) return null
+  const email = usuario.email ?? ''
+  return cleanDisplayName(usuario.nombre) || email || `Usuario ${usuario.id}`
 }
 
 export function memberFromUsuario(usuario: ApiUsuario) {
@@ -84,11 +67,4 @@ export function memberFromUsuario(usuario: ApiUsuario) {
     name: cleanDisplayName(usuario.nombre) || email || `Usuario ${usuario.id}`,
     role: roleFromUsuario(usuario),
   }
-}
-
-export function defaultEstadoId(fromTasks: ApiTarea[] = []): number {
-  const known = fromTasks.find((tarea) => tarea.estado?.id != null)?.estado?.id
-  if (known != null) return known
-  const fromEnv = Number(import.meta.env.VITE_DEFAULT_ESTADO_ID ?? 1)
-  return Number.isFinite(fromEnv) && fromEnv > 0 ? fromEnv : 1
 }

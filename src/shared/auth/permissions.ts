@@ -4,6 +4,7 @@ export type Permission =
   | 'task.view'
   | 'task.create'
   | 'task.edit'
+  | 'task.status'
   | 'task.delete'
   | 'task.assign'
   | 'member.view'
@@ -19,12 +20,13 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     'task.view',
     'task.create',
     'task.edit',
+    'task.status',
     'task.delete',
     'task.assign',
     'member.view',
     'member.manage',
   ],
-  member: ['task.view', 'task.create', 'task.edit', 'task.delete'],
+  member: ['task.view', 'task.create', 'task.status'],
 }
 
 export function permissionsForRole(role: Role): Permission[] {
@@ -56,7 +58,7 @@ export function canMutateTask(
   role: Role | undefined,
   userId: string | undefined,
   task: TaskOwnership,
-  permission: Extract<Permission, 'task.edit' | 'task.delete'>,
+  permission: Extract<Permission, 'task.edit' | 'task.status' | 'task.delete'>,
 ): boolean {
   return can(role, permission) && canAccessTask(role, userId, task)
 }
