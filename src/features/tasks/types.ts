@@ -6,6 +6,7 @@ export type Task = {
   description: string
   status: TaskStatus
   assigneeId: string | null
+  creatorId: string | null
   dueDate: string | null
   createdAt: string
 }

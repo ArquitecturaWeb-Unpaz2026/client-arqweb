@@ -3,11 +3,13 @@ withDefaults(
   defineProps<{
     type?: 'button' | 'submit'
     variant?: 'primary' | 'secondary' | 'danger'
+    size?: 'sm' | 'md'
     disabled?: boolean
   }>(),
   {
     type: 'button',
     variant: 'primary',
+    size: 'md',
     disabled: false,
   },
 )
@@ -17,7 +19,7 @@ withDefaults(
   <button
     :type="type"
     class="ui-btn"
-    :class="`ui-btn--${variant}`"
+    :class="[`ui-btn--${variant}`, `ui-btn--${size}`]"
     :disabled="disabled"
   >
     <slot />

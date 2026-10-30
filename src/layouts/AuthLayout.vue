@@ -12,13 +12,17 @@
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background:
-    radial-gradient(circle at 15% 0%, rgba(45, 212, 191, 0.12), transparent 42%),
-    radial-gradient(circle at 85% 100%, rgba(148, 163, 184, 0.18), transparent 40%),
-    var(--app-bg-auth);
+  background-color: #0b1f3a;
+  background-image:
+    radial-gradient(80% 60% at 50% 100%, rgba(13, 148, 136, 0.22), transparent 62%),
+    linear-gradient(180deg, rgba(8, 24, 48, 0.52) 0%, rgba(12, 32, 64, 0.78) 100%),
+    url('../assets/login-bg-institucional.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .auth-layout__panel {
-  width: min(100%, 26rem);
+  width: min(100%, 54rem);
 }
 </style>

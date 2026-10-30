@@ -52,7 +52,8 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
   if (!response.ok) {
     const errorBody = await parseErrorBody(response)
-    const message = errorBody?.message ?? response.statusText ?? 'Error en la solicitud'
+    const message =
+      errorBody?.detalle ?? errorBody?.message ?? response.statusText ?? 'Error en la solicitud'
     throw new ApiError(response.status, message, errorBody)
   }
 
@@ -68,6 +69,8 @@ export const api = {
     request<T>(path, { ...options, method: 'GET' }),
   post: <T>(path: string, body?: unknown, options?: Omit<RequestOptions, 'body'>) =>
     request<T>(path, { ...options, method: 'POST', body }),
+  put: <T>(path: string, body?: unknown, options?: Omit<RequestOptions, 'body'>) =>
+    request<T>(path, { ...options, method: 'PUT', body }),
   patch: <T>(path: string, body?: unknown, options?: Omit<RequestOptions, 'body'>) =>
     request<T>(path, { ...options, method: 'PATCH', body }),
   delete: <T>(path: string, options?: Omit<RequestOptions, 'body'>) =>

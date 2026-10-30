@@ -7,6 +7,7 @@ let tasks: Task[] = [
     description: 'Documentar endpoints existentes y tipos de respuesta.',
     status: 'done',
     assigneeId: 'u-admin',
+    creatorId: 'u-admin',
     dueDate: '2026-10-20',
     createdAt: '2026-10-10T10:00:00.000Z',
   },
@@ -16,6 +17,7 @@ let tasks: Task[] = [
     description: 'Vista con filtros básicos y estados.',
     status: 'in_progress',
     assigneeId: 'u-member',
+    creatorId: 'u-admin',
     dueDate: '2026-10-28',
     createdAt: '2026-10-15T12:00:00.000Z',
   },
@@ -25,6 +27,7 @@ let tasks: Task[] = [
     description: 'Solo visible para administradores.',
     status: 'todo',
     assigneeId: null,
+    creatorId: 'u-admin',
     dueDate: null,
     createdAt: '2026-10-18T09:30:00.000Z',
   },
@@ -48,7 +51,7 @@ export async function mockGetTask(id: string): Promise<Task> {
   return { ...task }
 }
 
-export async function mockCreateTask(input: TaskInput): Promise<Task> {
+export async function mockCreateTask(input: TaskInput, creatorId?: string | null): Promise<Task> {
   await delay()
   const task: Task = {
     id: `t-${Date.now()}`,
@@ -56,6 +59,7 @@ export async function mockCreateTask(input: TaskInput): Promise<Task> {
     description: input.description ?? '',
     status: input.status ?? 'todo',
     assigneeId: input.assigneeId ?? null,
+    creatorId: creatorId ?? input.assigneeId ?? null,
     dueDate: input.dueDate ?? null,
     createdAt: new Date().toISOString(),
   }

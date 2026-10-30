@@ -21,17 +21,28 @@
 }
 
 .ui-card {
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
+  background:
+    linear-gradient(180deg, rgba(240, 253, 250, 0.72) 0%, #ffffff 28%),
+    var(--app-surface);
+  border: 1px solid rgba(13, 148, 136, 0.12);
   border-radius: var(--app-radius-lg);
   box-shadow: var(--app-shadow-sm);
-  padding: 1.125rem 1.25rem;
+  padding: 1.2rem 1.3rem;
 }
 
 .ui-card--auth {
   border-radius: var(--app-radius-xl);
   box-shadow: var(--app-shadow-md);
   padding: 1.5rem 1.625rem;
+}
+
+.ui-kicker {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--app-accent);
 }
 
 .ui-title-page {
@@ -120,6 +131,24 @@
   white-space: nowrap;
 }
 
+.ui-badge--todo {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.ui-badge--in_progress {
+  background: #ecfdf5;
+  color: #0f766e;
+  border-color: #99f6e4;
+}
+
+.ui-badge--done {
+  background: #ccfbf1;
+  color: #115e59;
+  border-color: #5eead4;
+}
+
 .ui-link {
   color: var(--app-accent-hover);
   font-weight: 600;
@@ -132,8 +161,10 @@
 }
 
 .ui-table-wrap {
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
+  background:
+    linear-gradient(180deg, rgba(240, 253, 250, 0.72) 0%, #ffffff 22%),
+    var(--app-surface);
+  border: 1px solid rgba(13, 148, 136, 0.12);
   border-radius: var(--app-radius-lg);
   box-shadow: var(--app-shadow-sm);
   overflow: hidden;
@@ -147,13 +178,13 @@
 .ui-table th,
 .ui-table td {
   text-align: left;
-  padding: 0.8rem 1rem;
+  padding: 0.85rem 1.05rem;
   border-bottom: 1px solid var(--app-border);
 }
 
 .ui-table th {
-  background: var(--app-surface-muted);
-  color: var(--app-text-label);
+  background: rgba(13, 148, 136, 0.08);
+  color: var(--app-accent-text);
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -170,7 +201,7 @@
 }
 
 .ui-table tbody tr:hover td {
-  background: #f8fafc;
+  background: rgba(240, 253, 250, 0.7);
 }
 
 .ui-table td:first-child {
@@ -229,6 +260,11 @@
   cursor: not-allowed;
 }
 
+.ui-btn--sm {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+}
+
 .ui-btn--primary {
   background: var(--app-accent-hover);
   color: #ffffff;
@@ -245,7 +281,7 @@
 }
 
 .ui-btn--secondary:hover:not(:disabled) {
-  background: #e2e8f0;
+  background: #ccfbf1;
 }
 
 .ui-btn--danger {

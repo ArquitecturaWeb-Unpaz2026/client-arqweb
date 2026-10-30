@@ -32,7 +32,7 @@ async function onLogout() {
         <span class="brand__mark">AW</span>
         <div>
           <p class="brand__title">ArqWeb Tareas</p>
-          <p class="brand__subtitle">Cliente web</p>
+          <p class="brand__subtitle">Orden en cada entrega</p>
         </div>
       </div>
 
@@ -60,6 +60,7 @@ async function onLogout() {
 
     <div class="app-shell__main">
       <header class="app-shell__header">
+        <p class="ui-kicker">Panel de trabajo</p>
         <h1 class="ui-title-page">{{ pageTitle }}</h1>
       </header>
       <section class="app-shell__content">
@@ -74,11 +75,15 @@ async function onLogout() {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 17.5rem 1fr;
-  background: var(--app-bg);
+  background:
+    radial-gradient(80% 50% at 100% 0%, rgba(13, 148, 136, 0.1), transparent 58%),
+    var(--app-bg);
 }
 
 .app-shell__sidebar {
-  background: var(--app-sidebar-bg);
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(45, 212, 191, 0.18), transparent 52%),
+    linear-gradient(180deg, #0b1f3a 0%, #0e3b4a 100%);
   color: var(--app-sidebar-text);
   padding: 1.25rem 1rem;
   display: flex;
@@ -97,13 +102,14 @@ async function onLogout() {
 .brand__mark {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--app-radius-md);
+  border-radius: 0.75rem;
   display: grid;
   place-items: center;
-  background: linear-gradient(145deg, #2dd4bf, #0d9488);
+  background: linear-gradient(145deg, #5eead4, #14b8a6);
   color: #042f2e;
   font-weight: 800;
   font-size: 0.875rem;
+  box-shadow: 0 8px 18px rgba(2, 44, 34, 0.28);
 }
 
 .brand__title {
@@ -117,7 +123,7 @@ async function onLogout() {
 .brand__subtitle {
   margin: 0.12rem 0 0;
   font-size: 0.75rem;
-  color: var(--app-sidebar-muted);
+  color: #99f6e4;
 }
 
 .nav {
@@ -166,7 +172,7 @@ async function onLogout() {
 
 .session__logout {
   width: 100%;
-  border: 1px solid rgba(148, 163, 184, 0.35);
+  border: 1px solid rgba(153, 246, 228, 0.28);
   border-radius: var(--app-radius-md);
   padding: 0.45rem 0.75rem;
   cursor: pointer;
@@ -178,7 +184,7 @@ async function onLogout() {
 }
 
 .session__logout:hover {
-  background: rgba(148, 163, 184, 0.1);
+  background: rgba(45, 212, 191, 0.12);
   color: var(--app-sidebar-text);
 }
 
@@ -189,13 +195,15 @@ async function onLogout() {
 }
 
 .app-shell__header {
-  padding: 1.125rem 1.5rem;
-  background: var(--app-surface-header);
-  border-bottom: 1px solid var(--app-border);
+  padding: 1.15rem 1.5rem 1.05rem;
+  background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 72%);
+  border-bottom: 1px solid rgba(13, 148, 136, 0.14);
+  display: grid;
+  gap: 0.2rem;
 }
 
 .app-shell__content {
-  padding: 1.25rem 1.5rem 2rem;
+  padding: 1.35rem 1.5rem 2rem;
 }
 
 @media (max-width: 900px) {

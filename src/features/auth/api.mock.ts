@@ -5,14 +5,14 @@ const MOCK_USERS: Array<User & { password: string }> = [
     id: 'u-admin',
     email: 'admin@demo.com',
     password: 'demo123',
-    name: 'Administrador Demo',
+    name: 'Administrador',
     role: 'admin',
   },
   {
     id: 'u-member',
     email: 'member@demo.com',
     password: 'demo123',
-    name: 'Miembro Demo',
+    name: 'Miembro',
     role: 'member',
   },
 ]
@@ -27,7 +27,7 @@ export async function mockLogin(credentials: LoginCredentials): Promise<AuthSess
     (user) => user.email === credentials.email && user.password === credentials.password,
   )
   if (!match) {
-    throw new Error('Credenciales inválidas (prueba admin@demo.com / demo123)')
+    throw new Error('Credenciales inválidas')
   }
   const { password: _password, ...user } = match
   return {

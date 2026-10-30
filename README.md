@@ -40,7 +40,7 @@ Usuarios de prueba:
 | admin@demo.com | demo123 | Administrador |
 | member@demo.com | demo123 | Miembro |
 
-El rol **miembro** no ve la sección de miembros ni puede eliminar tareas.
+El rol **miembro** solo ve y gestiona sus propias tareas (las que creó o tiene asignadas). El **administrador** ve y gestiona todas las tareas, y es el único que accede a la sección de miembros.
 
 ## Conectar la API real
 
