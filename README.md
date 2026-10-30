@@ -59,6 +59,10 @@ npm run build    # compilación para producción
 npm run preview  # vista previa del build
 ```
 
+## Despliegue
+
+En cada push y pull request, GitHub Actions ejecuta `npm run build`. Un push a `main` que compila bien despliega este cliente en la VPS.
+
 ## Requisitos
 
 Node.js según `package.json` (recomendado ^22.18 o >=24.12). En entornos con Node 20 puede ser necesario `npm install --legacy-peer-deps`.
